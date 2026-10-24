@@ -12,7 +12,7 @@
 
 ## 🌟 Live Demo & Preview
 
-- **Live Production URL:** `https://aerolux-peach.vercel.app/`
+- **Live Production URL:** https://aerolux-peach.vercel.app/
 - **GitHub Repository:** `https://github.com/your-username/aerolux`
 
 ```
