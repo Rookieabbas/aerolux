@@ -1,14 +1,13 @@
 import { useState, useEffect, useCallback } from 'react';
 import toast from 'react-hot-toast';
-import { getUserBookings, getAllBookings, cancelBooking, updateBooking } from '../services/bookings';
+import { getUserBookings, cancelBooking, updateBooking } from '../services/bookings';
 import { useAuth } from '../context/AuthContext';
 
 /**
- * Custom hook to manage bookings state and mutations.
- * @param {boolean} isAdminView
+ * Custom hook to manage user bookings state and mutations.
  */
-export function useBookings(isAdminView = false) {
-  const { user, isAdmin } = useAuth();
+export function useBookings() {
+  const { user } = useAuth();
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -23,12 +22,7 @@ export function useBookings(isAdminView = false) {
     setLoading(true);
     setError(null);
     try {
-      let result;
-      if (isAdminView && isAdmin) {
-        result = await getAllBookings();
-      } else {
-        result = await getUserBookings(user.id);
-      }
+      const result = await getUserBookings(user.id);
 
       if (result.error) {
         setError(result.error);
@@ -41,7 +35,7 @@ export function useBookings(isAdminView = false) {
     } finally {
       setLoading(false);
     }
-  }, [user, isAdmin, isAdminView]);
+  }, [user]);
 
   useEffect(() => {
     fetchBookings();
@@ -55,7 +49,6 @@ export function useBookings(isAdminView = false) {
         return false;
       }
       toast.success('Charter flight cancelled successfully.');
-      // Update local state smoothly
       setBookings((prev) =>
         prev.map((b) => (b.id === bookingId ? { ...b, status: 'Cancelled' } : b))
       );

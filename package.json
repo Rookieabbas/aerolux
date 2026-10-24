@@ -9,6 +9,7 @@
     "client:build": "npm --prefix client run build"
   },
   "devDependencies": {
+    "@supabase/supabase-js": "^2.118.0",
     "pg": "^8.13.1"
   }
 }
