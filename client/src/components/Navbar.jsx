@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plane, Menu, X, User, LogOut, Shield, Compass, Calendar, ChevronDown } from 'lucide-react';
+import { Plane, Menu, X, User, LogOut, Compass, Calendar, ChevronDown, Sparkles } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { Button } from './Button';
 
 export function Navbar() {
-  const { user, profile, isAdmin, signOut } = useAuth();
+  const { user, profile, signOut } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const navigate = useNavigate();
@@ -22,7 +22,6 @@ export function Navbar() {
     { name: 'Fleet', path: '/jets', icon: Compass },
     { name: 'How It Works', path: '/#how-it-works' },
     ...(user ? [{ name: 'My Bookings', path: '/bookings', icon: Calendar }] : []),
-    ...(isAdmin ? [{ name: 'Admin Deck', path: '/admin', icon: Shield, badge: 'VIP' }] : []),
   ];
 
   const isActive = (path) => {
@@ -62,11 +61,6 @@ export function Navbar() {
             >
               {link.icon && <link.icon className="w-3.5 h-3.5 opacity-70" />}
               <span>{link.name}</span>
-              {link.badge && (
-                <span className="px-1.5 py-0.2 rounded text-[10px] bg-gold/20 text-gold font-mono uppercase">
-                  {link.badge}
-                </span>
-              )}
               {isActive(link.path) && (
                 <motion.div
                   layoutId="navUnderline"
@@ -89,12 +83,10 @@ export function Navbar() {
                   {profile?.full_name?.charAt(0) || user.email?.charAt(0).toUpperCase()}
                 </div>
                 <div className="text-left text-xs">
-                  <div className="text-white font-medium truncate max-w-[120px]">
-                    {profile?.full_name || 'VIP Guest'}
+                  <div className="text-white font-medium truncate max-w-[130px]">
+                    {profile?.full_name || 'VIP Member'}
                   </div>
-                  {isAdmin && (
-                    <div className="text-[10px] text-gold font-mono">Admin</div>
-                  )}
+                  <div className="text-[10px] text-gold font-medium">VIP Client</div>
                 </div>
                 <ChevronDown className="w-3.5 h-3.5 text-muted" />
               </button>
@@ -111,8 +103,8 @@ export function Navbar() {
                       <p className="text-[11px] font-medium text-white truncate">
                         {user.email}
                       </p>
-                      <span className="text-[10px] uppercase text-gold">
-                        Role: {profile?.role || 'User'}
+                      <span className="text-[10px] uppercase text-gold font-medium">
+                        VIP Charter Account
                       </span>
                     </div>
 
@@ -124,17 +116,6 @@ export function Navbar() {
                       <Calendar className="w-4 h-4 text-gold" />
                       <span>My Bookings</span>
                     </Link>
-
-                    {isAdmin && (
-                      <Link
-                        to="/admin"
-                        onClick={() => setUserDropdownOpen(false)}
-                        className="flex items-center gap-2 px-3.5 py-2.5 hover:bg-surface-card text-gold hover:text-gold-light"
-                      >
-                        <Shield className="w-4 h-4" />
-                        <span>Admin Console</span>
-                      </Link>
-                    )}
 
                     <button
                       onClick={handleLogout}
@@ -192,11 +173,6 @@ export function Navbar() {
                 className="flex items-center justify-between py-2 text-sm text-muted-light hover:text-white"
               >
                 <span>{link.name}</span>
-                {link.badge && (
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-gold/20 text-gold">
-                    {link.badge}
-                  </span>
-                )}
               </Link>
             ))}
 

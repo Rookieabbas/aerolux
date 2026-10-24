@@ -179,6 +179,46 @@ export function LandingPage() {
                 </Button>
               </div>
             </form>
+
+            {/* Quick Demo Route Shortcuts */}
+            <div className="mt-4 pt-3 border-t border-border/60 flex flex-wrap items-center justify-between gap-2 text-xs text-muted">
+              <span className="flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-gold font-medium">
+                <Sparkles className="w-3.5 h-3.5" />
+                Popular Demo Routes:
+              </span>
+              <div className="flex flex-wrap items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setFromCity('Delhi');
+                    setToCity('Dubai');
+                  }}
+                  className="px-2.5 py-1 rounded-lg bg-surface-card hover:bg-surface-hover text-[11px] text-muted-light hover:text-gold border border-border hover:border-gold/30 transition-colors"
+                >
+                  Delhi ✈ Dubai
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setFromCity('London');
+                    setToCity('New York');
+                  }}
+                  className="px-2.5 py-1 rounded-lg bg-surface-card hover:bg-surface-hover text-[11px] text-muted-light hover:text-gold border border-border hover:border-gold/30 transition-colors"
+                >
+                  London ✈ New York
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setFromCity('Mumbai');
+                    setToCity('Goa');
+                  }}
+                  className="px-2.5 py-1 rounded-lg bg-surface-card hover:bg-surface-hover text-[11px] text-muted-light hover:text-gold border border-border hover:border-gold/30 transition-colors"
+                >
+                  Mumbai ✈ Goa
+                </button>
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>

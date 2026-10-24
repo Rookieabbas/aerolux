@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
-import { Plane, Mail, Lock, User, Phone, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Plane, Mail, Lock, User, Phone, ArrowRight, Sparkles } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { Button } from '../components/Button';
 import { Input } from '../components/Input';
@@ -15,8 +15,19 @@ export function SignupPage() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const { signUp, isSupabaseConfigured } = useAuth();
+  const { signUp } = useAuth();
   const navigate = useNavigate();
+
+  // Auto-fill realistic demo VIP details
+  const handleAutoFill = () => {
+    const randomSuffix = Math.random().toString(36).substring(2, 6);
+    setFullName('Lady Vivienne Sterling');
+    setPhone('+1 (555) 839-4921');
+    setEmail(`vivienne.${randomSuffix}@aerolux.vip`);
+    setPassword('AeroLuxVIP2025!');
+    setConfirmPassword('AeroLuxVIP2025!');
+    toast.success('VIP registration details auto-filled!');
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -67,7 +78,7 @@ export function SignupPage() {
         className="w-full max-w-md bg-surface border border-border rounded-3xl p-8 sm:p-10 shadow-luxury"
       >
         {/* Brand Crest */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-6">
           <div className="w-12 h-12 rounded-2xl bg-gold-gradient flex items-center justify-center text-black font-bold mx-auto mb-4 shadow-gold-glow">
             <Plane className="w-6 h-6 fill-current rotate-45" />
           </div>
@@ -75,16 +86,21 @@ export function SignupPage() {
             Join the AeroLux Club
           </h1>
           <p className="text-xs text-muted mt-2">
-            Instant booking access, tailored in-flight dining, and bespoke private aviation charter.
+            Instant booking access, bespoke private aviation, and luxury travel.
           </p>
         </div>
 
-        {/* Supabase Config Warning */}
-        {!isSupabaseConfigured && (
-          <div className="mb-6 p-3.5 bg-amber-950/30 border border-amber-800/40 rounded-xl text-xs text-amber-300">
-            <strong>Configuration Notice:</strong> Please configure your Supabase URL & Anon Key in <code className="text-gold">client/.env</code>.
-          </div>
-        )}
+        {/* Quick Auto-Fill Demo Button */}
+        <div className="mb-6 flex justify-center">
+          <button
+            type="button"
+            onClick={handleAutoFill}
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gold/10 hover:bg-gold/20 border border-gold/40 text-gold-light text-xs font-medium transition-all shadow-sm hover:shadow-gold-glow"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-gold" />
+            <span>Auto-Fill Demo VIP Registration</span>
+          </button>
+        </div>
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">

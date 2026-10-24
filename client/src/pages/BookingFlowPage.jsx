@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { 
   Plane, Calendar, Users, MapPin, ArrowRight, ArrowLeft, 
-  Clock, ShieldCheck, DollarSign, FileText, CheckCircle2 
+  Clock, ShieldCheck, DollarSign, FileText, CheckCircle2, Sparkles 
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { getJetById } from '../services/jets';
@@ -48,18 +48,18 @@ export function BookingFlowPage() {
   const [toCity, setToCity] = useState(searchParams.get('to') || 'Dubai');
   const [flightDate, setFlightDate] = useState(() => {
     const d = new Date();
-    d.setDate(d.getDate() + 2);
+    d.setDate(d.getDate() + 3);
     return d.toISOString().split('T')[0];
   });
   const [passengers, setPassengers] = useState(
-    parseInt(searchParams.get('passengers') || '2', 10)
+    parseInt(searchParams.get('passengers') || '4', 10)
   );
 
   // Step 2: Passenger & Service Details Form
   const [passengerName, setPassengerName] = useState(profile?.full_name || '');
   const [passengerPhone, setPassengerPhone] = useState(profile?.phone || '');
   const [specialRequests, setSpecialRequests] = useState('');
-  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(true);
 
   // Load Jet and Cities
   useEffect(() => {
@@ -105,6 +105,24 @@ export function BookingFlowPage() {
   const estimatedTotal = jet
     ? calculateEstimatedPrice(estimatedHours, jet.price_per_hour)
     : 0;
+
+  // Demo auto-fill helpers
+  const handleAutoFillRoute = () => {
+    setFromCity('Delhi');
+    setToCity('Dubai');
+    const d = new Date();
+    d.setDate(d.getDate() + 3);
+    setFlightDate(d.toISOString().split('T')[0]);
+    setPassengers(Math.min(4, jet?.seats || 4));
+    toast.success('Demo flight route auto-filled: Delhi ✈ Dubai');
+  };
+
+  const handleAutoFillPassenger = () => {
+    setPassengerName('Lord Alexander Hamilton');
+    setPassengerPhone('+1 (555) 019-2834');
+    setSpecialRequests('Chilled Dom Pérignon 2008 Vintage on boarding, Ossetra Royal Caviar service with blinis, and tarmac Rolls-Royce Phantom ramp transfer on arrival.');
+    toast.success('VIP Passenger Manifest auto-filled!');
+  };
 
   // Step Navigation Validators
   const handleNextFromStep1 = () => {
@@ -241,9 +259,19 @@ export function BookingFlowPage() {
           >
             {/* Form Left (7 cols) */}
             <div className="lg:col-span-7 bg-surface border border-border rounded-3xl p-6 sm:p-8 space-y-6">
-              <h3 className="font-serif text-xl font-bold text-white pb-3 border-b border-border">
-                1. Select Route & Flight Schedule
-              </h3>
+              <div className="flex items-center justify-between pb-3 border-b border-border">
+                <h3 className="font-serif text-xl font-bold text-white">
+                  1. Select Route & Flight Schedule
+                </h3>
+                <button
+                  type="button"
+                  onClick={handleAutoFillRoute}
+                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold/10 hover:bg-gold/20 border border-gold/40 text-gold-light text-xs font-medium transition-all"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-gold" />
+                  <span>Demo Route</span>
+                </button>
+              </div>
 
               <div className="space-y-4">
                 {/* From City */}
@@ -399,18 +427,23 @@ export function BookingFlowPage() {
             exit={{ opacity: 0, x: -20 }}
             className="max-w-2xl mx-auto bg-surface border border-border rounded-3xl p-6 sm:p-8 space-y-6"
           >
-            <div className="border-b border-border pb-3 flex items-center justify-between">
+            <div className="border-b border-border pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
                 <h3 className="font-serif text-xl font-bold text-white">
                   2. Lead Passenger Manifest & Requests
                 </h3>
-                <p className="text-xs text-muted mt-1">
-                  Required for private hangar security clearance and in-flight catering.
+                <p className="text-xs text-muted mt-0.5">
+                  Private hangar security clearance and in-flight catering.
                 </p>
               </div>
-              <span className="text-xs font-mono text-gold px-2.5 py-1 rounded bg-gold/15">
-                Step 2 of 4
-              </span>
+              <button
+                type="button"
+                onClick={handleAutoFillPassenger}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gold/10 hover:bg-gold/20 border border-gold/40 text-gold-light text-xs font-medium transition-all shadow-sm hover:shadow-gold-glow self-start sm:self-auto"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-gold" />
+                <span>Auto-Fill VIP Details</span>
+              </button>
             </div>
 
             <div className="space-y-4">
@@ -439,7 +472,7 @@ export function BookingFlowPage() {
                   placeholder="Specify champagne preference (e.g. Dom Pérignon), caviar selection, ground limousine service, or special luggage requirements..."
                   value={specialRequests}
                   onChange={(e) => setSpecialRequests(e.target.value)}
-                  className="w-full bg-surface-card border border-border focus:border-gold rounded-xl p-3.5 text-xs text-white placeholder-muted-dark outline-none resize-none"
+                  className="w-full bg-surface-card border border-border focus:border-gold rounded-xl p-3.5 text-xs text-white placeholder-muted-dark outline-none resize-none leading-relaxed"
                 />
               </div>
             </div>

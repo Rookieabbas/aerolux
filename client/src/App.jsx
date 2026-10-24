@@ -5,7 +5,6 @@ import { Toaster } from 'react-hot-toast';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { ProtectedRoute } from './components/ProtectedRoute';
-import { AdminRoute } from './components/AdminRoute';
 import { ErrorBoundary } from './components/ErrorBoundary';
 
 import { LandingPage } from './pages/LandingPage';
@@ -13,7 +12,6 @@ import { JetsPage } from './pages/JetsPage';
 import { JetDetailPage } from './pages/JetDetailPage';
 import { BookingFlowPage } from './pages/BookingFlowPage';
 import { BookingsPage } from './pages/BookingsPage';
-import { AdminPage } from './pages/AdminPage';
 import { LoginPage } from './pages/LoginPage';
 import { SignupPage } from './pages/SignupPage';
 import { NotFoundPage } from './pages/NotFoundPage';
@@ -74,7 +72,7 @@ export function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
 
-            {/* Authenticated Protected Routes */}
+            {/* Authenticated User Charter Routes */}
             <Route
               path="/book/:jetId"
               element={
@@ -89,16 +87,6 @@ export function App() {
                 <ProtectedRoute>
                   <BookingsPage />
                 </ProtectedRoute>
-              }
-            />
-
-            {/* Admin Exclusive Route */}
-            <Route
-              path="/admin"
-              element={
-                <AdminRoute>
-                  <AdminPage />
-                </AdminRoute>
               }
             />
 

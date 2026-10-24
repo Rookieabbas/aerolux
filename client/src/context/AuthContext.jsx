@@ -91,7 +91,6 @@ export function AuthProvider({ children }) {
 
     if (error) throw error;
 
-    // In case email confirmation is disabled, user is immediately logged in
     if (data?.user) {
       setUser(data.user);
       await fetchProfile(data.user.id);
@@ -121,6 +120,26 @@ export function AuthProvider({ children }) {
     return data;
   };
 
+  // 1-Click Instant Demo Login (auto-creates if first time or signs in immediately)
+  const signInDemoUser = async () => {
+    const demoEmail = 'vip.guest@aerolux.vip';
+    const demoPassword = 'AeroLuxVIP2025!';
+    const demoName = 'Lord Alexander Hamilton';
+    const demoPhone = '+1 (555) 019-2834';
+
+    try {
+      return await signIn({ email: demoEmail, password: demoPassword });
+    } catch (err) {
+      // If user doesn't exist yet in Supabase auth, create it seamlessly
+      return await signUp({
+        email: demoEmail,
+        password: demoPassword,
+        fullName: demoName,
+        phone: demoPhone,
+      });
+    }
+  };
+
   // Sign out
   const signOut = async () => {
     if (!isSupabaseConfigured) {
@@ -141,15 +160,13 @@ export function AuthProvider({ children }) {
     }
   };
 
-  const isAdmin = profile?.role === 'admin';
-
   const value = {
     user,
     profile,
     loading,
-    isAdmin,
     signUp,
     signIn,
+    signInDemoUser,
     signOut,
     refreshProfile,
     isSupabaseConfigured,
