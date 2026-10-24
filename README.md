@@ -18,7 +18,7 @@
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
 │                        AEROLUX FLIGHT MANIFEST                         │
-│  DEL ────────────✈──────────── DXB  |  BOMBARDIER GLOBAL 7500          │
+│  DEL ────────────✈──────────── DXB  |  BOMBARDIER GLOBAL 7500         │
 │  Distance: 2,192 km | Flight Time: 2h 14m | Status: CONFIRMED VIP      │
 │  Perforated Boarding Pass with Instant High-Resolution PDF Download    │
 └────────────────────────────────────────────────────────────────────────┘
