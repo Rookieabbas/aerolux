@@ -3,8 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { 
   Plane, Calendar, Users, Clock, AlertTriangle, Eye, Edit3, 
-  Ban, ShieldCheck, Download, Plus, MapPin, RefreshCw 
+  Ban, ShieldCheck, Download, Plus, MapPin, RefreshCw, FileSpreadsheet 
 } from 'lucide-react';
+import toast from 'react-hot-toast';
 import { useBookings } from '../hooks/useBookings';
 import { Badge } from '../components/Badge';
 import { Button } from '../components/Button';
@@ -13,6 +14,7 @@ import { Input } from '../components/Input';
 import { Ticket } from '../components/Ticket';
 import { TableRowSkeleton, Skeleton } from '../components/Skeleton';
 import { formatCurrency, formatFlightDuration } from '../utils/haversine';
+import { exportBookingsToGoogleSheetsCSV } from '../services/googleSheets';
 
 export function BookingsPage() {
   const { bookings, loading, refetch, cancelBooking, updateBooking } = useBookings(false);
@@ -85,11 +87,29 @@ export function BookingsPage() {
           </p>
         </div>
 
-        <Link to="/jets">
-          <Button variant="primary" size="md" icon={Plus} className="shadow-gold-glow">
-            Charter Another Jet
+        <div className="flex flex-wrap items-center gap-3">
+          <Button
+            variant="secondary"
+            size="md"
+            icon={FileSpreadsheet}
+            onClick={() => {
+              const ok = exportBookingsToGoogleSheetsCSV(filteredBookings);
+              if (ok) {
+                toast.success('Flight manifest exported for Google Sheets!');
+              } else {
+                toast.error('No flight records to export.');
+              }
+            }}
+            className="hover:border-emerald-500/50 hover:text-emerald-300"
+          >
+            Export to Google Sheets
           </Button>
-        </Link>
+          <Link to="/jets">
+            <Button variant="primary" size="md" icon={Plus} className="shadow-gold-glow">
+              Charter Another Jet
+            </Button>
+          </Link>
+        </div>
       </div>
 
       {/* Filter Tabs */}
