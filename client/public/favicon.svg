@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <rect width="32" height="32" rx="8" fill="#0a0a0a"/>
+  <rect width="32" height="32" rx="8" stroke="#d4af37" stroke-width="1.5" stroke-opacity="0.4"/>
+  <path d="M16 4L19 13L27 15L19 18L18 26L16 22L14 26L13 18L5 15L13 13L16 4Z" fill="url(#goldGrad)" stroke="#f0c75e" stroke-width="0.5"/>
+  <defs>
+    <linearGradient id="goldGrad" x1="5" y1="4" x2="27" y2="26" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f0c75e"/>
+      <stop offset="0.5" stop-color="#d4af37"/>
+      <stop offset="1" stop-color="#aa8822"/>
+    </linearGradient>
+  </defs>
+</svg>

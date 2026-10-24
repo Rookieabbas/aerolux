@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    border-color: #262626;
+  }
+  
+  body {
+    background-color: #0a0a0a;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* Custom gold scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0a0a0a;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #262626;
+    border-radius: 4px;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #d4af37;
+  }
+}
+
+@layer utilities {
+  .text-gold-gradient {
+    background: linear-gradient(135deg, #f0c75e 0%, #d4af37 50%, #aa8822 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .border-gold-gradient {
+    border-image: linear-gradient(135deg, rgba(240, 199, 94, 0.4), rgba(212, 175, 55, 0.1), rgba(170, 136, 34, 0.4)) 1;
+  }
+
+  .gold-glass {
+    background: rgba(20, 20, 20, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .gold-glass-hover {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .gold-glass-hover:hover {
+    border-color: rgba(212, 175, 55, 0.35);
+    box-shadow: 0 0 25px -5px rgba(212, 175, 55, 0.15);
+  }
+}
